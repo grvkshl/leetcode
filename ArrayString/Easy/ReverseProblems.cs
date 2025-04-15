@@ -70,13 +70,46 @@ namespace Leetcode.ArrayString.Easy
         /// <param name="s"></param>
         /// <returns></returns>
         public void ReverseWords_2(char[] s)
-        {
-            char[] newS = new char[s.Length];
+        {            
             int index = 0;
-            for (int i = s.Length - 1; i > 0; i--)
-            {
-                newS[index] = s[i];
+            int last = s.Length - 1;
+
+            while (index < last) {
+                char temp = s[last];
+                s[last] = s[index];
+                s[index] = temp;
+                index++;
+                last--;
             }
+
+
+            int startPointer = 0;
+            int lastPointer = s.Length-1;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if ((s[i] == ' ') || i == (s.Length -1))
+                {
+                    if (i < lastPointer) lastPointer = i - 1;
+
+                    while (startPointer < lastPointer)
+                    {
+                        char temp = s[lastPointer];
+                        s[lastPointer] = s[startPointer];
+                        s[startPointer] = temp;
+                        startPointer++;
+                        lastPointer--;
+                    }
+                    
+                    startPointer = i+1;
+                    lastPointer = s.Length - 1;
+                }
+            }
+            foreach (char item in s)
+            {
+                Console.WriteLine($"{item}");
+            }            
+
         }
 
         public int[] TwoSum(int[] nums, int target)
